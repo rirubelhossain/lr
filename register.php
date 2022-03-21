@@ -1,9 +1,22 @@
 
 
-		 <?php
-		 include "inc/header.php";
+<?php
+include "inc/header.php";
+include "lib/User.php";
 
-		 ?>
+
+?>
+<?php
+$user = new User();
+
+if($_SERVER['REQUEST_METHOD'] == 'POST' and isset($_POST['register'])){
+	$uerRegi = $user->userRegistration($_POST);
+	 
+}
+
+
+?>
+
 
 		<div class="panel panel-default">
 		<div class="panel-heading">
@@ -12,7 +25,7 @@
 
 		<div class="panel-body">
 			<div style="max-width: 600px; margin: 0 auto">
-			 <form action="" method="">
+			 <form action="" method="POST">
 			 	<div class="form-group">
 			 		<label for="name">Your Name</label>
 			 		<input type="text" name="name" class="form-control" id="name" required="1" />
