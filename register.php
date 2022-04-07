@@ -9,8 +9,7 @@ include "lib/User.php";
 <?php
 $user = new User();
 
-if($_SERVER['REQUEST_METHOD'] == 'POST' and isset($_POST['register'])){
-	///echo "hello connected ";
+if($_SERVER['REQUEST_METHOD'] == 'POST' and isset($_POST['register'])){	 
 	$usrRegi = $user->userRegistration($_POST);	 
 }
 ?>
