@@ -96,22 +96,86 @@ class User
 		}
 	}
 
-	public function getUserLogin($email , $password){
-		$sql = "SELECT * from tbl_user where email = :email and password = :password LIMIT 1 ";
+	// public function getLoginUser($email , $password){
+	// 	$sql = "SELECT * FROM tbl_user WHERE email = :email AND password = :password LIMIT 1 ";
+	// 	$query = $this->db->pdo->prepare($sql);
+	// 	$query->bindValue(':email',$email);
+	// 	$query->bindValue(':password',$password);
+	// 	$result = $query->fetch(PDO::FETCH_OBJ);
+	// 	return $result ;
+	// }
+
+	// public function userLogin($data){
+
+	// 	$email = $data['email'];
+	// 	$password = md5($data['password']);
+	// 	$chk_email =  $this->emailChek($email);
+
+	// 	if( $email == "" or $password == "" ){
+	// 		$msg = "<div class = 'alert alert-danger'>
+	// 		<strong>
+	// 		Error ! 
+	// 		</strong>Field must not be empty 	
+	// 		</div>";
+	// 		return $msg ;
+	// 	}
+	// 	if(filter_var($email , FILTER_VALIDATE_EMAIL) === false){
+	// 		$msg = "<div class = 'alert alert-danger'>
+	// 		<strong>
+	// 		Error ! 
+	// 		</strong>The Email address is not valid! 	
+	// 		</div>";
+	// 		return $msg ;	
+	// 	}
+	// 	if( $chk_email === true ){
+	// 		$msg = "<div class = 'alert alert-danger'>
+	// 		<strong>
+	// 		Error ! 
+	// 		</strong>The Email address is already Exist 	
+	// 		</div>";
+	// 		return $msg ;	
+	// 	}
+	// 	$result = $this->getLoginUser($email , $password);
+
+	// 	if($result){
+	// 		Session::init();
+	// 		Session::set("login" , true);
+	// 		Session::set("id" , $result->id);
+	// 		Session::set("name" , $result->name);
+	// 		Session::set("username" , $result->username);
+	// 		Session::set("loginmsg" , "<div class = 'alert alert-success'>
+	// 		<strong>
+	// 		Success ! 
+	// 		</strong>You are loggedin 	
+	// 		</div>");
+	// 		header("Location: index.php ");	
+
+	// 	}else{
+	// 		$msg = "<div class = 'alert alert-danger'>
+	// 		<strong>
+	// 		Error ! 
+	// 		</strong>Value Not Found 	
+	// 		</div>";
+	// 		return $msg ;	
+	// 	}
+	// }
+
+
+	public function getLoginUser($email , $password){
+		$sql = "SELECT * FROM tbl_user WHERE email = :email AND password = :password LIMIT 1";
 		$query = $this->db->pdo->prepare($sql);
-		$query->bindValue(':name',$name);
-		$query->bindValue(':username',$username);
+		$query->bindValue(':email' , $email);
+		$query->bindValue(':password', $password);
+		$query->execute() ;
 		$result = $query->fetch(PDO::FETCH_OBJ);
 		return $result ;
 	}
-
 	public function userLogin($data){
+		$email = $data['email'] ;
+		$password = md5($data['password']) ;
+		$chk_email = $this->emailChek($email) ;
 
-		$email = $data['email'];
-		$password = md5($data['password']);
-		$chk_email =  $this->emailChek($email);
-
-		if( $email == "" or $password == "" ){
+		if($email == "" or $password == "" ){
 			$msg = "<div class = 'alert alert-danger'>
 			<strong>
 			Error ! 
@@ -127,40 +191,39 @@ class User
 			</div>";
 			return $msg ;	
 		}
-		if( $chk_email === true ){
+		if( $chk_email == false ){
 			$msg = "<div class = 'alert alert-danger'>
 			<strong>
 			Error ! 
-			</strong>The Email address is already Exist 	
+			</strong>The Email Not Exist 	
 			</div>";
 			return $msg ;	
 		}
-		$result = $this->getUserLogin($email , $password);
+		$result = $this->getLoginUser($email , $password);
 
 		if($result){
-			Session::init();
-			Session::set("login" , true);
+			Session::init() ;
+			Session::set("login" , true ) ;
 			Session::set("id" , $result->id);
 			Session::set("name" , $result->name);
-			Session::set("username" , $result->username);
-			Session::set("loginmsg" , "<div class = 'alert alert-success'>
+			Session::set("username" , $result->username);	
+			Session::set("loginmsg", "<div class = 'alert alert-success'>
 			<strong>
 			Success ! 
-			</strong>You are loggedin 	
+			</strong>You are loggdIn!	
 			</div>");
-			header("Location: index.php ");	
+			header("Location: index.php");
 
 		}else{
 			$msg = "<div class = 'alert alert-danger'>
 			<strong>
 			Error ! 
-			</strong>Value Not Found 	
+			</strong>Data Not Found!	
 			</div>";
 			return $msg ;	
 		}
-	}
-	
 
+	}	
 }
 
 

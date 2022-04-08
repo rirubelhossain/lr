@@ -3,6 +3,7 @@
  <?php
 include "inc/header.php";
 include "lib/User.php";
+Session::checkSession();
 
 $user = new User();
 
@@ -13,19 +14,19 @@ $loginmsg = Session::get("loginmsg") ;
 	if(isset($loginmsg)){
 		echo $loginmsg ;
 	}
-
+	Session::set("loginmsg", NULL);
 ?>
-
 
 		<div class="panel panel-default">
 		<div class="panel-heading">
 			<h2>UserList<span class="pull-right"><strong>Welcome ! </strong>
-
 			<?php
-			$name = Session::get("name");
+			
+			$name = Session::get("name");			
 			if(isset($name)){
 				echo $name;
 			}
+
 			?>
 
 		</span></h2>

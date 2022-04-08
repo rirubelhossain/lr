@@ -2,7 +2,7 @@
 
 		 <?php
 		 include "inc/header.php";
-
+		 Session::checkLogin();
 		 ?>
 
 		<div class="panel panel-default">

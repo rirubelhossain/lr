@@ -1,7 +1,7 @@
 <?php
 
 $filepath = realpath(dirname(__FILE__));
-include_once $filepath . '/../lib/Session.php';
+include_once $filepath.'/../lib/Session.php';
 Session::init();
 
 ?>
@@ -17,7 +17,13 @@ Session::init();
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		
 	</head>
+<?php
 
+	if(isset($_GET['action']) && $_GET['action'] == "logout"){
+		Session::destroy();
+	}
+
+?>
 	<body>
 		 
 			<div class="container">
@@ -28,10 +34,19 @@ Session::init();
 						<a class="navbar-brand" href="index.php">Login Register System</a>
 					</div>
 					<ul class="nav navbar-nav pull-right">
+
+						<?php
+							$id = Session::get("id");
+							$userlogin = Session::get("login");
+							if($userlogin == true ){
+						?>
 						<li><a href="profile.php">Profile</a></li>
-						<li><a href="">Logout</a></li>
+						<li><a href="?action=logout">Logout</a></li>
+						<?php }else{ ?>
 						<li><a href="login.php">Login</a></li>
 						<li><a href="register.php">Register</a></li>
+						<li><a href="index.php">Home</a></li>
+						<?php }?>
 					</ul>
 				</div>
 			</nav>
