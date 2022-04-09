@@ -1,11 +1,11 @@
 
 
  <?php
-include "inc/header.php";
-include "lib/User.php";
-Session::checkSession();
+ include "lib/User.php";
+ include "inc/header.php";
+ Session::checkSession();	
 
-$user = new User();
+
 
 ?>
 <?php
@@ -19,16 +19,16 @@ $loginmsg = Session::get("loginmsg") ;
 
 		<div class="panel panel-default">
 		<div class="panel-heading">
-			<h2>UserList<span class="pull-right"><strong>Welcome ! </strong>
+			<h2>UserList<span class="pull-right">Welcome!
+			<strong>
 			<?php
-			
-			$name = Session::get("name");			
-			if(isset($name)){
-				echo $name;
+
+			$username = Session::get("username");			
+			if(isset($username)){
+				echo $username;
 			}
 
-			?>
-
+			?></strong>
 		</span></h2>
 		</div>
 
@@ -39,34 +39,34 @@ $loginmsg = Session::get("loginmsg") ;
 				<th width="20%">Username</th>
 				<th width="20%">Email Address</th>
 				<th width="20%">Action</th>
+<?php
+$user = new User();
+$userdata = $user->getUserData();
 
+if($userdata){
+	$i = 0 ;
+	foreach ($userdata as $data) {	
+		++$i ;
+?>
 				<tr>
-					<td>01</td>
-					<td>Rubel</td>
-					<td>rubel12</td>
-					<td>rubel@gmail.com</td>
+					<td><?php echo $i ;?></td>
+					<td><?php echo $data['name'] ;?></td>
+					<td><?php echo $data['username'] ;?></td>
+					<td><?php echo $data['email'];?></td>
 					<td>
-						<a class="btn btn-primary" href="profile.php?id=1">View</a>
+						<a class="btn btn-primary" href="profile.php?id=<?php echo $data['id'] ; ?>">View</a>
 					</td>
 				</tr>
-				<tr>
-					<td>01</td>
-					<td>Rubel</td>
-					<td>rubel12</td>
-					<td>rubel@gmail.com</td>
-					<td>
-						<a class = "btn btn-primary" href="profile.php?id=2">View</a>
-					</td>
-				</tr>
-				<tr>
-					<td>01</td>
-					<td>Rubel</td>
-					<td>rubel12</td>
-					<td>rubel@gmail.com</td>
-					<td>
-						<a class="btn btn-primary" href="profile.php?id=3">View</a>
-					</td>
-				</tr>
+<?php 	
+	}
+}else {
+?>		
+	<tr>
+		<td colspan="5"><h2>No User Data Found </h2></td>
+	</tr>
+<?php 
+}
+?>
 			</table>
 		</div>
 

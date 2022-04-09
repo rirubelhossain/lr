@@ -40,7 +40,7 @@ Session::init();
 							$userlogin = Session::get("login");
 							if($userlogin == true ){
 						?>
-						<li><a href="profile.php">Profile</a></li>
+						<li><a href="profile.php?id=<?php echo $id; ?>">Profile</a></li>
 						<li><a href="?action=logout">Logout</a></li>
 						<?php }else{ ?>
 						<li><a href="login.php">Login</a></li>
